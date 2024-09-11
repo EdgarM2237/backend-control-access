@@ -49,8 +49,9 @@ const manageUsers = {
 
   deleteUser: (req, res) => {
     const { id } = req.body;
+    console.log(req.body);
     connection.query(
-      "DELETE FROM users WHERE id = (?)",
+      "UPDATE users SET is_active = 0 WHERE user_id = (?)",
       [id],
       (err, result) => {
         if (err) {

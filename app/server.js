@@ -8,6 +8,7 @@ import cors from 'cors';
 import manageUsers from './controllers/usersController.js';
 import cookieParser from 'cookie-parser';
 import { authenticateTokenFromCookie } from './middleware/manageMiddleware.js';
+import { devices } from './models/Devices.js';
 
 
 dotenv.config();
@@ -25,6 +26,8 @@ app.use('/api/auth', authRoutes); // Autenticación
 app.use('/api/users', usersRoutes); // Usuarios
 
 app.get('/api/user_logs', user_logs); // users logs
+app.get('/api/usuario', devices); // devices
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', manageUsers.Users);
 router.patch('/editusers', manageUsers.userEditPost);
-router.delete('/deleteusers', manageUsers.deleteUser);
+router.post('/deleteusers', manageUsers.deleteUser);
 router.post('/addusers', manageUsers.addUser);
 
 export default router;
