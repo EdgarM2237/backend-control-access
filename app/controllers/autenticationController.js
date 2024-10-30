@@ -54,7 +54,7 @@ export const autenticationDoor = (req, res) => {
                       (err, results) => {
                         if (err) return res.status(500).json({ error: err });
                         return res.status(201).json({
-                          message: "Usuario registrado exitosamente!",
+                          message: "Tarjeta Enviada a Servidor",
                         });
                       }
                     );
@@ -63,7 +63,7 @@ export const autenticationDoor = (req, res) => {
               } else {
                 return res
                   .status(202)
-                  .json({ message: "Usuario ya registrado!" });
+                  .json({ message: "Tarjeta Registrada" });
               }
             }
           );
@@ -80,7 +80,7 @@ export const autenticationDoor = (req, res) => {
                 if (results.length < 1)
                   return res
                     .status(404)
-                    .json({ message: "Tarjeta no encontrada" });
+                    .json({ message: "Tarjeta no Encontrada" });
                 connection.query(
                   "SELECT * FROM permisos WHERE users_id = ? AND devices_id = ?",
                   [usuario.user_id, device_id],
@@ -106,7 +106,7 @@ export const autenticationDoor = (req, res) => {
                         (err, results) => {
                           if (err) return res.status(500).json({ error: err });
                           return res.status(202).json({
-                            message: `Acceso Denegado ${usuario.user_name}`,
+                            message: `Acceso Denegado: ${usuario.user_name}`,
                           });
                         }
                       );
@@ -123,7 +123,7 @@ export const autenticationDoor = (req, res) => {
                         (err, results) => {
                           if (err) res.status(500).json({ error: err });
                           return res.status(200).json({
-                            message: `Bienvenido ${usuario.user_name} `,
+                            message: `Bienvenido: ${usuario.user_name} `,
                           });
                         }
                       );
