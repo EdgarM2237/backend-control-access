@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://admina.netlify.app",
     credentials: true,
   })
 );
