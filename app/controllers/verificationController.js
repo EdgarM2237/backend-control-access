@@ -10,7 +10,7 @@ export const resendCode = (req, res) => {
   verificationCodes.set(email, code);
 
   resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "Admina <onboarding@resend.dev>",
     to: email,
     subject: "Nuevo código de verificación",
     html: `<p>Tu nuevo código de verificación es: <strong>${code}</strong></p>`,
@@ -38,7 +38,7 @@ export const sendCode = (email) => {
   verificationCodes.set(email, code);
 
   resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
+    from: "Admina <onboarding@resend.dev>",
     to: email,
     subject: "Código de verificación",
     html: `<p>Tu código de verificación es: <strong>${code}</strong></p>`,

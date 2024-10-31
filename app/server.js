@@ -71,12 +71,10 @@ app.get("/api/autentication", autenticationDoor);
 //---------Rutas de Servicios----------//
 // Servir archivos estáticos desde la carpeta 'uploads'
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 // Rutas para subir, actualizar y eliminar fotos de perfil USUARIOS
 app.post("/upload/:id", upload.single("profilePic"), uploadProfilePic);
 app.put("/upload/:id", upload.single("profilePic"), updateProfilePic);
 app.delete("/upload/:id", deleteProfilePic);
-
 // Rutas para subir y actualizar fotos de perfil ADMINISTRADORES
 app.post("/upload/admin/:id", upload.single("profilePic"), uploadAdminProfilePic);
 app.put("/upload/admin/:id", upload.single("profilePic"), updateAdminProfilePic);
