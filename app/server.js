@@ -24,6 +24,11 @@ import { autenticationDoor } from "./controllers/autenticationController.js";
 dotenv.config();
 morgan.token("body", (req) => JSON.stringify(req.body));
 
+const allowedOrigins = [
+  "https://admina.netlify.app", // URL de producción
+  "http://localhost:5173"       // URL local para pruebas
+];
+
 const verificationCodes = new Map();
 const app = express();
 
@@ -37,10 +42,18 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://admina.netlify.app",
+    origin: function (origin, callback) {
+      // Permite solicitudes sin 'origin' (como desde herramientas de desarrollo como Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("No permitido por CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
