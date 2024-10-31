@@ -1,5 +1,14 @@
 import connection from "../config/db.js";
 
+function workerCode() {
+  const year = new Date().getFullYear().toString();
+  const minute = new Date().getMinutes().toString().padStart(2, "0");
+  const hour = new Date().getHours().toString().padStart(2, "0");
+  const day = new Date().getDay().toString().padStart(2, "0");
+  const code = year + hour + day + minute;
+  return code;
+}
+
 export const autenticationDoor = (req, res) => {
   const { device_token, card_uid } = req.query;
   try {
@@ -38,9 +47,10 @@ export const autenticationDoor = (req, res) => {
                   (date.getMonth() + 1) +
                   "-" +
                   date.getDate();
+                const serialnumber = workerCode();
                 connection.query(
-                  "INSERT INTO users (card_uid, user_date) VALUES (?, ?)",
-                  [card_uid, user_date],
+                  "INSERT INTO users (card_uid, user_date, user_serial) VALUES (?, ?, ?)",
+                  [card_uid, user_date, serialnumber],
                   (err, results) => {
                     if (err) {
                       return res.status(500).json({
