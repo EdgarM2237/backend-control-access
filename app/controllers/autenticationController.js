@@ -101,7 +101,13 @@ export const autenticationDoor = (req, res) => {
                       "-" +
                       (date.getMonth() + 1) +
                       "-" +
-                      date.getDate();
+                      date.getDate() +
+                      " " +
+                      date.getHours() +
+                      ":" +
+                      date.getMinutes() +
+                      ":" +
+                      date.getSeconds();
                     if (err) return res.status(500).json({ error: err });
                     if (results.length < 1) {
                       connection.query(
