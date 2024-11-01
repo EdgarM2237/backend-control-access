@@ -2,6 +2,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User_action from "../models/User_actions.js";
 import { serialize } from "cookie";
+import { Resend } from "resend";
+import { sendCode } from "./verificationController.js";
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+const verificationCodes = new Map();
 
 export const register = (req, res) => {
   const { username, email, password } = req.body;
@@ -28,6 +33,7 @@ export const login = (req, res) => {
 
       if (!isMatch)
         return res.status(400).json({ message: "Contraseña incorrecta!" });
+      sendCode(email);
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
@@ -43,7 +49,7 @@ export const login = (req, res) => {
       res
         .setHeader("Set-Cookie", serialized)
         .status(200)
-        .json({ message: "Sesion iniciada!", serialized, redirected: "/" });
+        .json({ message: "Sesion iniciada!", serialized, redirected: "/verify" });
     });
   });
 };

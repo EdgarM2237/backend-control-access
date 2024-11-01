@@ -1,6 +1,5 @@
 import express from 'express';
 import manageUsers from '../controllers/usersController.js';
-import { authenticateTokenFromCookie } from '../middleware/manageMiddleware.js';
 
 const router = express.Router();
 
