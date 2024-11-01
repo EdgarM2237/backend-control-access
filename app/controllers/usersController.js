@@ -94,18 +94,25 @@ const manageUsers = {
           if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });
           }
-          connection.query(
-            "DELETE FROM users WHERE users_id = (?)",
-            [id],
-            (err, result) => {
-              if(err) console.log(err)
-              if(result.affectedRows === 0){
-                return res.status(404).json({message: "Usuario no encontrado"})
-              }else{
-                return res.status(200).json({message: "Usuario eliminado exitosamente", result })
-              }
+          try {
+            connection.query(
+              "DELETE FROM users WHERE users_id = (?)",
+              [id],
+              (err, result) => {
+                if(err){
+                  return res.status(500).json({error: err, message: "Error al eliminar el usuario"})
+                }
+                if(result.affectedRows === 0){
+                  return res.status(404).json({message: "Usuario no encontrado"})
+                }else{
+                  return res.status(200).json({message: "Usuario eliminado exitosamente", result })
+                }
 
-            })
+              })
+          } catch (error) {
+            console.log(error);
+          }
+
         }
       }
     );
