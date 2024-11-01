@@ -83,7 +83,7 @@ const manageUsers = {
       const { id } = req.body;
       console.log(req.body);
       connection.query(
-        "UPDATE users SET is_active = 0, user_serial = NULL WHERE user_id = (?)",
+        "UPDATE users SET is_active = 0, user_serial = NULL, user_email = NULL, card_uid = NULL WHERE user_id = (?)",
         [id],
         (err, result) => {
           if (err) {
@@ -95,22 +95,6 @@ const manageUsers = {
             if (result.affectedRows === 0) {
               return res.status(404).json({ message: "Usuario no encontrado" });
             }
-          }
-        }
-      );
-
-      connection.query(
-        "DELETE FROM users WHERE users_id = (?)",
-        [id],
-        (err, result) => {
-          if (err) {
-            return res
-              .status(500)
-              .json({ error: err, message: "Error al eliminar el usuario" });
-          }
-          if (result.affectedRows === 0) {
-            return res.status(404).json({ message: "Usuario no encontrado" });
-          } else {
             return res
               .status(200)
               .json({ message: "Usuario eliminado exitosamente", result });
